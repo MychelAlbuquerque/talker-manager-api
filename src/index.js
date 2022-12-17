@@ -6,6 +6,9 @@ const crypto = require('crypto');
 const talkerPath = path.resolve(__dirname, './talker.json');
 const emailValidation = require('./middlewares/emailValidation');
 const passwordValidation = require('./middlewares/passwordValidation');
+const tokenValidation = require('./middlewares/tokenValidation');
+const nameValidation = require('./middlewares/nameValidation');
+const ageValidation = require('./middlewares/ageValidation');
 
 const app = express();
 app.use(express.json());
@@ -14,7 +17,6 @@ const HTTP_OK_STATUS = 200;
 const PORT = '3000';
 
 // não remova esse endpoint, e para o avaliador funcionar
-
 app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
 });
@@ -22,6 +24,7 @@ app.get('/', (_request, response) => {
 app.listen(PORT, () => {
   console.log('Online');
 });
+// ----------------------------------------------------
 
 app.get('/talker', async (req, res) => {
   const talkerData = await fs.readFile(talkerPath, 'utf-8');
@@ -40,4 +43,13 @@ app.get('/talker/:id', async (req, res) => {
 app.post('/login', emailValidation, passwordValidation, (req, res) => {
   const token = crypto.randomBytes(8).toString('hex');
   res.status(HTTP_OK_STATUS).json({ token });
+});
+
+app.post('/talker', tokenValidation, nameValidation, ageValidation, async (req, res) => {
+  const { name, age, talk } = req.body;
+  const talkersData = JSON.parse(await fs.readFile('src/talker.json'));
+  const newTalker = { id: talkersData.length + 1, name, age, talk };
+  talkersData.push(newTalker);
+  await fs.writeFile(talkerPath, JSON.stringify(talkersData));
+  return res.status(201).json(newTalker);
 });
