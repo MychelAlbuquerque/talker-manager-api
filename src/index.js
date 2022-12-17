@@ -34,9 +34,8 @@ app.get('/talker', async (req, res) => {
 
 app.get('/talker/:id', async (req, res) => {
   const { id } = req.params;
-  let talkerData = await fs.readFile(talkerPath, 'utf-8');
-  talkerData = JSON.parse(talkerData);
-  const talker = talkerData[id - 1];
+  const talkersData = JSON.parse(await fs.readFile(talkerPath));
+  const talker = talkersData[id - 1];
   if (!talker) return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
   return res.status(HTTP_OK_STATUS).json(talker);
 });
@@ -53,9 +52,44 @@ app.post('/talker',
   talkValidation,
   rateValidation, async (req, res) => {
     const { name, age, talk } = req.body;
-    const talkersData = JSON.parse(await fs.readFile('src/talker.json'));
+    const talkersData = JSON.parse(await fs.readFile(talkerPath));
     const newTalker = { id: talkersData.length + 1, name, age, talk };
     talkersData.push(newTalker);
     await fs.writeFile(talkerPath, JSON.stringify(talkersData));
     return res.status(201).json(newTalker);
+  });
+
+app.put('/talker/:id',
+  tokenValidation,
+  nameValidation,
+  ageValidation,
+  talkValidation,
+  rateValidation, async (req, res) => {
+    let { id } = req.params;
+    id = Number(id);
+    const { name, age, talk } = req.body;
+    const newTalkerData = {
+      id,
+      name,
+      age,
+      talk,
+    };
+    const talkersData = JSON.parse(await fs.readFile(talkerPath));
+    const talkerIndex = talkersData.findIndex((e) => e.id === id);
+    talkersData[talkerIndex] = newTalkerData;
+    await fs.writeFile(talkerPath, JSON.stringify(talkersData));
+    return res.status(200).json(newTalkerData);
+  });
+
+app.delete('/talker/:id',
+  tokenValidation, async (req, res) => {
+    let { id } = req.params;
+    id = Number(id);
+    const talkersData = JSON.parse(await fs.readFile(talkerPath));
+    const talkerIndex = talkersData.findIndex((e) => e.id === id);
+
+    talkersData.splice(talkerIndex, 1);
+
+    await fs.writeFile(talkerPath, JSON.stringify(talkersData));
+    return res.status(204).json();
   });
