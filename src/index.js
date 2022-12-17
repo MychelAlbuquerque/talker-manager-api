@@ -9,6 +9,7 @@ const passwordValidation = require('./middlewares/passwordValidation');
 const tokenValidation = require('./middlewares/tokenValidation');
 const nameValidation = require('./middlewares/nameValidation');
 const ageValidation = require('./middlewares/ageValidation');
+const { talkValidation, rateValidation } = require('./middlewares/talkValidation');
 
 const app = express();
 app.use(express.json());
@@ -45,11 +46,16 @@ app.post('/login', emailValidation, passwordValidation, (req, res) => {
   res.status(HTTP_OK_STATUS).json({ token });
 });
 
-app.post('/talker', tokenValidation, nameValidation, ageValidation, async (req, res) => {
-  const { name, age, talk } = req.body;
-  const talkersData = JSON.parse(await fs.readFile('src/talker.json'));
-  const newTalker = { id: talkersData.length + 1, name, age, talk };
-  talkersData.push(newTalker);
-  await fs.writeFile(talkerPath, JSON.stringify(talkersData));
-  return res.status(201).json(newTalker);
-});
+app.post('/talker',
+  tokenValidation,
+  nameValidation,
+  ageValidation,
+  talkValidation,
+  rateValidation, async (req, res) => {
+    const { name, age, talk } = req.body;
+    const talkersData = JSON.parse(await fs.readFile('src/talker.json'));
+    const newTalker = { id: talkersData.length + 1, name, age, talk };
+    talkersData.push(newTalker);
+    await fs.writeFile(talkerPath, JSON.stringify(talkersData));
+    return res.status(201).json(newTalker);
+  });
