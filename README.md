@@ -1,6 +1,6 @@
 # Talker Manager API :desktop_computer: :pencil:
 
-### API desenvolvida como um sistema de gerencimento de palestrantes. Ela permite a criação, atualização, remoção e busca de palestrantes, um CRUD.
+### API desenvolvida como um sistema de gerenciamento de palestrantes. Ela permite a criação, atualização, remoção e busca de informações, um CRUD.
 
 ## :large_blue_circle: Tecnologias utilizadas:
 Node.js
@@ -45,7 +45,7 @@ GET /talker :arrow_right: retorna a lista de todos os palestrantes cadastrados.
 
 GET /talker/:id :arrow_right: retorna o palestrante correspondente ao Id informado.
 
-POST /login :arrow_right: autentica o usuário e retorna um token de acesso.
+POST /login :arrow_right: autentica o usuário e retorna um token de acesso utilizando JWT.
 
 POST /talker :arrow_right: cadastra um novo palestrante.
 
