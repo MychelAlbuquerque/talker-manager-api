@@ -18,8 +18,7 @@ Para executar a API, é necessário ter o Docker instalado. Depois, basta execut
 
 Primeiro, será necessaŕio efetuar o clone do repositório. Execute o comando:
 
-git clone git@github.com:MychelAlbuquerque/talker-manager-api.git
-
+:small_orange_diamond:git clone git@github.com:MychelAlbuquerque/talker-manager-api.git
 
 Depois, acesse a pasta para onde o repositório foi clonado e execute o docker compose:
 
