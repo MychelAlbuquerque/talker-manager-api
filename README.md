@@ -1,83 +1,82 @@
-#Talker Manager API
-##API desenvolvida como um sistema de gerencimento de palestrantes. Ela permite a criação, atualização, remoção e busca de palestrantes, um CRUD.
+# Talker Manager API :desktop_computer: :pencil:
 
-##Tecnologias utilizadas:
+### API desenvolvida como um sistema de gerencimento de palestrantes. Ela permite a criação, atualização, remoção e busca de palestrantes, um CRUD.
+
+## :large_blue_circle: Tecnologias utilizadas:
 Node.js
+
 Express
+
 Docker
-Nodemon
+
 Json Web Token (JWT)
 
 
-Como executar
-Para executar a API, é necessário ter o Docker instalado. Após isso, basta rodar o seguinte comando na pasta do projeto:
+## :large_blue_circle: Como executar:
 
-Copy code
-docker-compose up
-A API estará disponível no endereço http://localhost:3000.
+Para executar a API, é necessário ter o Docker instalado. Depois, basta executar os seguintes comandos:
 
-Endpoints
-A API possui os seguintes endpoints:
+Primeiro, será necessaŕio efetuar o clone do repositório. Execute o comando:
 
-GET /talker: retorna a lista de todos os palestrantes cadastrados.
-GET /talker/:id: retorna o palestrante correspondente ao ID informado.
-POST /login: autentica o usuário e retorna um token de acesso.
-POST /talker: cadastra um novo palestrante.
-PUT /talker/:id: atualiza os dados de um palestrante já cadastrado.
-DELETE /talker/:id: remove um palestrante cadastrado.
-Validações
-As seguintes validações são realizadas nos dados informados:
+git clone git@github.com:MychelAlbuquerque/talker-manager-api.git
+
+
+Depois, acesse a pasta para onde o repositório foi clonado e execute o docker compose:
+
+:small_orange_diamond: docker-compose up -d 
+
+
+Agora, acesse o terminal Bash do container que foi criado:
+
+:small_orange_diamond: docker exec -it talker_manager bash
+
+
+Finalmente, instale as dependências e suba o servidor que irá prover os dados da API:
+
+:small_orange_diamond: npm install 
+
+:small_orange_diamond: npm run start
+
+#### :green_circle: Tudo pronto! A API estará rodando na porta 3000.
+
+## :large_blue_circle: Endpoints:
+
+GET /talker :arrow_right: retorna a lista de todos os palestrantes cadastrados.
+
+GET /talker/:id :arrow_right: retorna o palestrante correspondente ao Id informado.
+
+POST /login :arrow_right: autentica o usuário e retorna um token de acesso.
+
+POST /talker :arrow_right: cadastra um novo palestrante.
+
+PUT /talker/:id :arrow_right: atualiza os dados de um palestrante já cadastrado.
+
+DELETE /talker/:id :arrow_right: remove um palestrante cadastrado.
+
+
+## :large_blue_circle: Validações
+Com o intuito de manter o código funcional e não permitir a inserção de dados incorretos as seguintes validações são realizadas nos dados informados:
 
 Email: deve estar em um formato válido.
+
 Senha: deve ter no mínimo 6 caracteres.
+
 Nome: deve ter no mínimo 3 caracteres.
+
 Idade: deve ser um número inteiro positivo.
+
 Talk: deve ter no mínimo 30 caracteres.
+
 Rate: deve ser um número inteiro de 1 a 5.
-Exemplo de uso
-Para cadastrar um novo palestrante, faça uma requisição HTTP POST para o endpoint /talker, informando os seguintes dados no corpo da requisição:
 
-json
-Copy code
-{
-  "name": "Fulano de Tal",
-  "age": 30,
-  "talk": "Como ser um bom palestrante",
-  "rate": 4
-}
-A API retornará os dados do novo palestrante cadastrado:
+# Obrigado! :handshake: E... Me conta ai! :thumbsup:
 
-json
-Copy code
-{
-  "id": 1,
-  "name": "Fulano de Tal",
-  "age": 30,
-  "talk": "Como ser um bom palestrante",
-  "rate": 4
-}
-Para atualizar os dados de um palestrante já cadastrado, faça uma requisição HTTP PUT para o endpoint /talker/:id, informando o ID do palestrante a ser atualizado e os novos dados no corpo da requisição:
+Agradeço muito por ter visitado meu repositório! 
 
-json
-Copy code
-{
-  "name": "Fulano de Tal",
-  "age": 35,
-  "talk": "Como ser um bom palestrante",
-  "rate": 5
-}
-A API retornará os dados atualizados do palestrante:
+Caso tenha qualquer sugestão ou algum comentário, vou ficar muito feliz em saber!
 
-json
-Copy code
-{
-  "id": 1,
-  "name": "Fulano de Tal",
-  "age": 35,
-  "talk": "Como ser um bom palestrante",
-  "rate": 5
-}
-Para remover um palestrante cadastrado, faça uma requisição HTTP DELETE para o endpoint /talker/:id, informando o ID do palestrante a ser removido.
+Mychel Albuquerque
 
-Autor
-Essa API foi desenvolvida por [Seu nome aqui].
+mychelalbu@gmail.com
+
+Projeto desenvolvido durante minha formação Fullstack na Trybe.
